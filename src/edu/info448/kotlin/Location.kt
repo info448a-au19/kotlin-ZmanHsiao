@@ -4,7 +4,7 @@ package edu.info448.kotlin
    of a city. A City should have three properties: a `name` (String), `latitude`
    (Double), and `longitude` (Double).
 */
-
+data class City(val name: String, val latitude: Double, val longitude: Double)
 
 
 /* Step 1: Define a function called `listCities()` that returns a `list` of 
@@ -18,7 +18,14 @@ package edu.info448.kotlin
    Call your function from inside the provided `main()` method, saving the result
    to a local variable called `cityLocations`. Print this out to check your work.
 */
-
+fun listCities(): List<City> {
+    return listOf(
+            City("Atlanta", 33.7490, -84.3880),
+            City( "Bothell", 47.7601,  -122.2054),
+            City("New York", 40.7128, -74.0060),
+            City("San Francisco", 37.7749, -122.4194),
+            City("Tacoma", 47.2529, -122.4443))
+}
 
 
 /* Step 2: Define a function `distanceFromSeattle()` that takes as a param a 
@@ -31,6 +38,9 @@ package edu.info448.kotlin
    Call your function from inside the provided `main()` method and print out the
    distance between Seattle and Tacoma (should be about 40km)
 */
+fun distanceFromSeattle(city: City): Double {
+    return haversine(city.latitude, city.longitude, 47.6062, -122.3321)
+}
 
 
 
@@ -99,5 +109,20 @@ fun haversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
 //The main method. Add the code described above in here. Please indicate each
 //step with a comment!
 fun main(args: Array<String>) {
-
+    // step 1
+    var cityLocations = listCities();
+    println(cityLocations);
+    // step 2
+    println(distanceFromSeattle(cityLocations[4]))
+    // step 3
+    println(cityLocations.map{distanceFromSeattle(it)})
+    // step 4
+    println(cityLocations.filter{distanceFromSeattle(it) > 50})
+    // step 5
+    println(cityLocations.filter{it.longitude < -89.97803}.map{it.name})
+    // step 6
+    println(cityLocations.maxBy{distanceFromSeattle(it)})
+    // step 7
+//    var citiesByName = listCities().fold(mutableMapOf<String, City>()) {m, c -> m.put(c.name, c)}
+//    println(citiesByName)
 }
