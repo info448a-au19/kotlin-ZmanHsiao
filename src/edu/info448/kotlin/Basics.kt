@@ -1,8 +1,11 @@
 package edu.info448.kotlin
 
+import kotlin.math.E
+import kotlin.math.pow
+
 /* Define an _immutable_ variable `name` whose value is your name 
    (first and last) */
-
+val name = "Zachary Hsiao"
 
 /* Define a function called `feels()` that takes in two String as arguments: 
    one representing a topic (e.g., "Kotlin") and one representing an emotion 
@@ -12,7 +15,9 @@ package edu.info448.kotlin
    
    Use an inline string template!
 */
-
+fun feels(topic: String, emotion: String) {
+    println("$topic makes me feel $emotion")
+}
 
 /* In the main function at the bottom of the file, call your `feels()` function 
    and let us know how "Kotlin" makes you feel! */
@@ -32,7 +37,10 @@ package edu.info448.kotlin
    check your work. Compare to
      http://www.mathwarehouse.com/calculators/continuous-compound-interest-calculator.php
 */
-
+fun compoundInterest(principle: Int, rate: Double = .01, duration: Int = 1): Double {
+    var value = rate * duration
+    return principle * E.pow(value)
+}
 
 
 /* Define a function `fizzBuzz()` that takes in a single number (an Int) as an 
@@ -47,21 +55,52 @@ package edu.info448.kotlin
 
    Optional challenge: try to do this using `map()` instead of a loop!
 */
+fun fizzBuzz(num: Int): List<String> {
+    var list: MutableList<String> = mutableListOf<String>()
+    var i = 1
+    while (i <= num) {
+        var value: String;
+        if (i % 3 == 0 && i % 5 == 0) {
+            value = "FizzBuzz"
+        } else if (i % 3 == 0) {
+            value = "Fizz"
+        } else if (i % 5 == 0) {
+            value = "Buzz"
+        } else {
+            value = i.toString()
+        }
+        list.add(value)
+        i++;
+    }
+
+    return list
+}
 
 
-/* Challenge: declare an _extension function_ for the String class that 
+/* Challenge: declare an _extension function_ for the String class that
    overloads the `times()` operator function. The function should take in an Int,
-   allowing allowing the String to be multiplied by a number--e.g., `"spam" * 3`. 
-   Your function should return a new String that is the initial string repeated 
-   a number of times. For example, `"spam" * 3` should return the String 
+   allowing allowing the String to be multiplied by a number--e.g., `"spam" * 3`.
+   Your function should return a new String that is the initial string repeated
+   a number of times. For example, `"spam" * 3` should return the String
    "spamspamspam". Remmber to declare your function as an `operator` function!
 
   Tip: use a range and the `fold()` functions to repeat and aggregate the String
 */
-
+operator fun String.times(num: Int): String {
+    var i = 1
+    var value: String = this
+    while (i < num) {
+        value += this
+        i++;
+    }
+    return value
+}
 
 
 //A main() method in Kotlin
 fun main(args: Array<String>) {
-
+    feels("Kotlin", "tired")
+    println(compoundInterest(10, .03, 5))
+    println(fizzBuzz(15))
+    println("yes".times(4))
 }
